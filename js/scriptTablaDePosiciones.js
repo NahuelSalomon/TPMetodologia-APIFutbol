@@ -1,6 +1,6 @@
 const apiKey = "549a7bb64cmsh22a289e69814bbcp1e7974jsnc74d4dcbd570";
 
-const endpointPosicionesLigaEspaña = "standings?season=2020&league=140";
+const endpointPosicionesLigaEspania = "standings?season=2020&league=140";
 const endpointPosicionesLigaInglaterra = "standings?season=2020&league=39";
 const endpointPosicionesLigaAlemania = "standings?season=2020&league=78";
 const endpointPosicionesLigaItalia = "standings?season=2020&league=135";
@@ -148,7 +148,7 @@ window.onload = () => {
 
 
     buttonLaLiga.addEventListener("click", () => {
-        callApi(endpointPosicionesLigaEspaña)
+        callApi(ni)
 
             .then(response => {
 

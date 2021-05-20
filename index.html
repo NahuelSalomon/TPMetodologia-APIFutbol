@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Favicon -->
-    <link href="assets/img/brand/favicon.png" rel="icon" type="image/png">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <!-- Icons -->
-    <link href="assets/vendor/nucleo/css/nucleo.min.css" rel="stylesheet">
-    <link href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <!-- Argon CSS -->
-    <link type="text/css" href="assets/css/argon.min.css" rel="stylesheet">
+<div id="head-placeholder">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
 
-    <title>Document</title>
-</head>
+        /* get($(function () {
+            $("#nav-placeholder").load("head.html");
+        })); */
+
+        $.get("head.html", function (data) {
+            $("#head-placeholder").replaceWith(data);
+        });
+
+
+    </script>
+</div>
+
 
 <body class="g-sidenav-show g-sidenav-pinned">
 
     <div class="container-fluid">
+
+
+        <div id="nav-placeholder">
+            <script>
+                $.get("nav.html", function (data) {
+                    $("#nav-placeholder").replaceWith(data);
+                });
+
+                /* $(function () {
+                    $("#nav-placeholder").load("nav.html");
+                }); */
+            </script>
+        </div>
+
 
         <div class="main-content" id="panel">
 
@@ -70,7 +85,7 @@
     </div>
 
 
-        <!--     <table class="table" id="tabla">
+    <!--     <table class="table" id="tabla">
     
         <thead id="headTable">
 
@@ -88,15 +103,14 @@
     <button id="SERIE_A" type="button" class="btn btn-info">Serie A</button>
     <button id="LEAGUE_1" type="button" class="btn btn-dark">Ligue 1</button> -->
 
+    <script src="js/scriptTablaDePosiciones.js"></script>
+    <!-- Scripts template -->
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/argon.min.js"></script>
 </body>
 
 
 
-<script src="js/scriptTablaDePosiciones.js"></script>
-
-<!-- Scripts template -->
-<script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/argon.min.js"></script>
 
 </html>
