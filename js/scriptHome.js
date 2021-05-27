@@ -1,8 +1,14 @@
 import { updatePositionsTable } from './scriptPositionsTable.js';
+
 import { callApi, endpointTeamsSpainStandings, endpointTeamsEnglandStandings, 
                   endpointTeamsGermanyStandings,endpointTeamsItalyStandings, 
                   endpointTeamsFranceStandings, endPointCountries } 
 from './scpritApi.js';
+
+import {getFixtureLeague,endpointFixtureSpain,endpointFixtureEngland, endpointFixtureFrance,endpointFixtureItaly,endpointFixtureGermany,
+        spainMatches, englandMatches, franceMatches, italyMatches, germanyMatches } 
+from './scriptFixture.js';
+
 
 const spainFirstDivisionTeams = new Array();
 const englandFirstDivisionTeams = new Array();
@@ -36,8 +42,8 @@ window.onload = () => {
             insertFlagLeagueIntoNav(flagURLSpain, "LA_LIGA_SPAN");
             insertFlagLeagueIntoNav(flagURLEngland, "PREMIER_LEAGUE_SPAN");
             insertFlagLeagueIntoNav(flagURLGermany, "BUNDESLIGA_SPAN");
-            insertFlagLeagueIntoNav(flagURLFrance, "SERIE_A_SPAN");
-            insertFlagLeagueIntoNav(flagURLItaly, "LEAGUE_1_SPAN");
+            insertFlagLeagueIntoNav(flagURLItaly, "SERIE_A_SPAN");
+            insertFlagLeagueIntoNav(flagURLFrance, "LEAGUE_1_SPAN");
 
         })
         .catch(error => console.log(error))
@@ -49,6 +55,12 @@ window.onload = () => {
     addEventToButtonLeague(buttonLeague1,endpointTeamsFranceStandings,franceFirstDivisionTeams,urlLogoLeague1);
     addEventToButtonLeague(buttonPremierLeague,endpointTeamsEnglandStandings,englandFirstDivisionTeams,urlLogoPremierLeague);
 
+    getFixtureLeague(endpointFixtureSpain,spainMatches,"140");
+    getFixtureLeague(endpointFixtureEngland,englandMatches,"39");
+    getFixtureLeague(endpointFixtureGermany,germanyMatches,"78");
+    getFixtureLeague(endpointFixtureItaly,italyMatches,"135");
+    getFixtureLeague(endpointFixtureFrance,franceMatches,"61");
+   
 }
 
 function insertFlagLeagueIntoNav(urlFlagLeague, parentId) {
