@@ -2,3 +2,36 @@ body{
     background-image: url("../img/780.jpg");
 }
 
+.backgroud-flag{
+    background-color: #708C76;
+}
+
+.backgroud-flag:hover{
+    background-color: #9BC0A3;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
+.font-postions-table{
+    font-family: sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+}
+
+.head-table-positions {
+    background-color: #708C76; 
+    color: white;
+}
+
+.letter-table{
+    font-weight: bold;
+     color: black;
+}
+
+.color-green-dark{
+    background-color: #3D5443;
+}
