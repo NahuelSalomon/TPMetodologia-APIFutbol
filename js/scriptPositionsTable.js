@@ -1,51 +1,117 @@
+
+import {addBodyHeader} from './scriptHome.js';
+
 function cleanTable() {
 
     var bodyTable = document.getElementById("bodyTable");
     var headTable = document.getElementById("headTable");
     var logoHead = document.getElementById("logo");
+    var panel = document.getElementById("panel");
+    var rawTablePositions = document.getElementById("rawTablePositions");
+
 
     if(document.getElementById("divLogo")) {
         logoHead.removeChild(document.getElementById("divLogo"));
     }
 
-    while (bodyTable.firstChild) {
+/*     while (bodyTable.firstChild) {
         bodyTable.removeChild(bodyTable.firstChild);
     }
 
     while (headTable.firstChild) {
         headTable.removeChild(headTable.firstChild);
-    }
+    } */
+/* 
+    if(panel) {
+        while (panel.firstChild) {
+            panel.removeChild(panel.firstChild);
+        }
+    } */
+
+
+
+        while (panel.firstChild) {
+
+            panel.removeChild(panel.firstChild);
+        }
+    
+
+
+    
 }
 
 function addHeadTable(urlImageLeague) {
+    
+    var panel = document.getElementById("panel")
 
-    var headTable = document.getElementById("headTable");
-    var logoHead = document.getElementById("logo");
+    var divConteinerFluid = document.createElement("div");
+    divConteinerFluid.classList.add("container-fluid", "mt--6");
+    console.log(panel);
+    panel.appendChild(divConteinerFluid);
 
+    var divRawTablePositions= document.createElement("div");
+    divRawTablePositions.classList.add("row");
+    divRawTablePositions.id = "rawTablePositions";
+    divConteinerFluid.appendChild(divRawTablePositions);
 
-    var divImageLeague = document.createElement("div");
-    divImageLeague.id = "divLogo";
-    divImageLeague.classList.add("col-lg-6","col-7");
-    logoHead.appendChild(divImageLeague);
+            var divCol = document.createElement("div");
+            divCol.classList.add("col");
+            divCol.id = "colPositions";
+            divRawTablePositions.appendChild(divCol);
 
-    var imageLeague = document.createElement("img");
-    imageLeague.src = urlImageLeague;
-    divImageLeague.appendChild(imageLeague);
-        
-    var thRank = document.createElement("th");
-    thRank.scope = "col";
-    thRank.innerHTML = "Position";
-    headTable.appendChild(thRank);
+            var divCard = document.createElement("div");
+            divCard.classList.add("card","bg-default","shadow");
+            divCard.style.backgroundColor = "#3D5443";
+            divCol.appendChild(divCard);
 
-    var thName = document.createElement("th");
-    thName.scope = "col";
-    thName.innerHTML = "Team"
-    headTable.appendChild(thName);
+            var divTableResponsive = document.createElement("div");
+            divTableResponsive.classList.add("table-responsive");
+            divTableResponsive.id = "divTable";
+            divCard.appendChild(divTableResponsive);
 
-    var thPoints = document.createElement("th");
-    thPoints.scope = "col";
-    thPoints.innerHTML = "Points"
-    headTable.appendChild(thPoints);
+                    var tablePosition = document.createElement("table");
+                    tablePosition.classList.add("table","align-items-center","table-success","table-flush");
+                    tablePosition.id = "table-position" ;
+                    tablePosition.style.fontWeight = "bold";
+                    tablePosition.style.color = "black";
+                    divTableResponsive.appendChild(tablePosition);
+                    
+                    var headTable = document.createElement("thead");
+                    headTable.classList.add("thead","head-table-positions" );
+                    headTable.id = "headTable";
+                    headTable.style.backgroundColor = "#708C76";
+                    headTable.style.color = "white";
+                    tablePosition.appendChild(headTable);
+
+                        var divImageLeague = document.createElement("div");
+                        divImageLeague.id = "divLogo";
+                        divImageLeague.classList.add("col-lg-6","col-7");
+                       /*  
+                           var logoHead = document.getElementById("logo");logoHead.appendChild(divImageLeague);
+ */
+                        var imageLeague = document.createElement("img");
+                        imageLeague.src = urlImageLeague;
+                        divImageLeague.appendChild(imageLeague);
+                            
+                        var thRank = document.createElement("th");
+                        thRank.scope = "col";
+                        thRank.innerHTML = "Position";
+                        headTable.appendChild(thRank);
+
+                        var thName = document.createElement("th");
+                        thName.scope = "col";
+                        thName.innerHTML = "Team"
+                        headTable.appendChild(thName);
+
+                        var thPoints = document.createElement("th");
+                        thPoints.scope = "col";
+                        thPoints.innerHTML = "Points"
+                        headTable.appendChild(thPoints);
+
+                    var bodyTable = document.createElement("tbody");
+                    bodyTable.classList.add("list");
+                    bodyTable.id = "bodyTable";
+                    tablePosition.appendChild(bodyTable);
 
 }
 
@@ -84,6 +150,7 @@ function insertTeamsIntoTable(team) {
 function updatePositionsTable(teams,urlLogo) {
     
     cleanTable();
+    addBodyHeader();
     addHeadTable(urlLogo);
 
     teams[0].forEach(team => {

@@ -1,5 +1,8 @@
 body{
-    background-image: url("../img/780.jpg");
+    background-image: url("../img/leagues.png");
+    background-color:rgb(47, 56, 107);
+    background-position: top center;
+    background-repeat:no-repeat;
 }
 
 .backgroud-flag{

@@ -1,4 +1,4 @@
-import { updatePositionsTable } from './scriptPositionsTable.js';
+import { updatePositionsTable,cleanTable } from './scriptPositionsTable.js';
 
 import { callApi, endpointTeamsSpainStandings, endpointTeamsEnglandStandings, 
                   endpointTeamsGermanyStandings,endpointTeamsItalyStandings, 
@@ -22,7 +22,11 @@ const urlLogoGermany = new String();
 const urlLogoLeague1 = new String();
 const urlLogoPremierLeague = new String();
 
+
+
 window.onload = () => {
+
+    cleanTable();
 
     const buttonLaLiga = document.getElementById("LA_LIGA");
     const buttonSerieA = document.getElementById("SERIE_A");
@@ -48,23 +52,24 @@ window.onload = () => {
         })
         .catch(error => console.log(error))
 
-    
+    addEventGoToHome()
     addEventToButtonLeague(buttonLaLiga,endpointTeamsSpainStandings,spainFirstDivisionTeams,urlLogoSpain);
     addEventToButtonLeague(buttonSerieA,endpointTeamsItalyStandings,italyFirstDivisionTeams,urlLogoItaly);
     addEventToButtonLeague(buttonBundesliga,endpointTeamsGermanyStandings,germanyFirstDivisionTeams,urlLogoGermany);
     addEventToButtonLeague(buttonLeague1,endpointTeamsFranceStandings,franceFirstDivisionTeams,urlLogoLeague1);
     addEventToButtonLeague(buttonPremierLeague,endpointTeamsEnglandStandings,englandFirstDivisionTeams,urlLogoPremierLeague);
 
-    getFixtureLeague(endpointFixtureSpain,spainMatches,"140");
+    /* getFixtureLeague(endpointFixtureSpain,spainMatches,"140");
     getFixtureLeague(endpointFixtureEngland,englandMatches,"39");
     getFixtureLeague(endpointFixtureGermany,germanyMatches,"78");
     getFixtureLeague(endpointFixtureItaly,italyMatches,"135");
-    getFixtureLeague(endpointFixtureFrance,franceMatches,"61");
+    getFixtureLeague(endpointFixtureFrance,franceMatches,"61"); */
    
 }
 
 function insertFlagLeagueIntoNav(urlFlagLeague, parentId) {
     var image = document.createElement("img");
+
     image.src = urlFlagLeague;
     image.style.height = "30%"
     image.style.width = "30%";
@@ -92,4 +97,48 @@ function addEventToButtonLeague(button,endponit,teams,urlLogo) {
                 updatePositionsTable(teams,urlLogo);
             }
         });
+}
+
+function addEventGoToHome() {
+    var buttonHome = document.getElementById("HOME");
+    
+    buttonHome.addEventListener("click",() => {
+        cleanTable();
+    });
+
+}
+
+
+export function addBodyHeader() {
+
+    var divHeader = document.createElement("div");
+    divHeader.classList.add("header","bg","pb-6");
+    divHeader.style.backgroundColor = "#708C76";
+    document.getElementById("panel").appendChild(divHeader);
+    
+        var divConteiner = document.createElement("div");
+        divConteiner.classList.add("container-fluid");
+        divHeader.appendChild(divConteiner);
+    
+            var divHeaderBody = document.createElement("div");
+            divHeaderBody.classList.add("header-body");
+            divConteiner.appendChild(divHeaderBody);
+
+    
+                var divRow = document.createElement("div");
+                divRow.classList.add("row","align-items-center","py-4");
+                divRow.id = "logo";
+                divHeaderBody.appendChild(divRow);
+
+
+                    var divCol = document.createElement("div");
+                    divCol.classList.add("col-lg-6","col-7");
+                    divRow.appendChild(divCol);
+
+                        var h6PositionsTable =  document.createElement("div");
+                        h6PositionsTable.classList.add("font-postions-table");
+                        h6PositionsTable.innerHTML = "Positions table";
+                        divCol.appendChild(h6PositionsTable);
+
+
 }
