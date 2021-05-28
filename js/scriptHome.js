@@ -5,7 +5,7 @@ import { callApi, endpointTeamsSpainStandings, endpointTeamsEnglandStandings,
                   endpointTeamsFranceStandings, endPointCountries } 
 from './scpritApi.js';
 
-import {getFixtureLeague,endpointFixtureSpain,endpointFixtureEngland, endpointFixtureFrance,endpointFixtureItaly,endpointFixtureGermany,
+import {updateFixtureLeague, endpointFixtureSpain,endpointFixtureEngland, endpointFixtureFrance,endpointFixtureItaly,endpointFixtureGermany,
         spainMatches, englandMatches, franceMatches, italyMatches, germanyMatches } 
 from './scriptFixture.js';
 
@@ -52,18 +52,18 @@ window.onload = () => {
         })
         .catch(error => console.log(error))
 
-    addEventGoToHome()
+    addEventGoToHome();
     addEventToButtonLeague(buttonLaLiga,endpointTeamsSpainStandings,spainFirstDivisionTeams,urlLogoSpain);
     addEventToButtonLeague(buttonSerieA,endpointTeamsItalyStandings,italyFirstDivisionTeams,urlLogoItaly);
     addEventToButtonLeague(buttonBundesliga,endpointTeamsGermanyStandings,germanyFirstDivisionTeams,urlLogoGermany);
     addEventToButtonLeague(buttonLeague1,endpointTeamsFranceStandings,franceFirstDivisionTeams,urlLogoLeague1);
     addEventToButtonLeague(buttonPremierLeague,endpointTeamsEnglandStandings,englandFirstDivisionTeams,urlLogoPremierLeague);
 
-    /* getFixtureLeague(endpointFixtureSpain,spainMatches,"140");
-    getFixtureLeague(endpointFixtureEngland,englandMatches,"39");
-    getFixtureLeague(endpointFixtureGermany,germanyMatches,"78");
-    getFixtureLeague(endpointFixtureItaly,italyMatches,"135");
-    getFixtureLeague(endpointFixtureFrance,franceMatches,"61"); */
+    addEventFixtureToButtonLeague(buttonLaLiga,endpointFixtureSpain,spainMatches,"140");
+    addEventFixtureToButtonLeague(buttonPremierLeague,endpointFixtureEngland,englandMatches,"39");
+    addEventFixtureToButtonLeague(buttonBundesliga,endpointFixtureGermany,germanyMatches,"78");
+    addEventFixtureToButtonLeague(buttonSerieA,endpointFixtureItaly,italyMatches,"135");
+    addEventFixtureToButtonLeague(buttonLeague1,endpointFixtureFrance,franceMatches,"61");
    
 }
 
@@ -99,6 +99,17 @@ function addEventToButtonLeague(button,endponit,teams,urlLogo) {
         });
 }
 
+
+function addEventFixtureToButtonLeague(button,endPointfixture, leagueMatches, league) {
+
+    button.addEventListener("click", () => {
+
+        updateFixtureLeague(endPointfixture,leagueMatches,league);
+     
+    });
+}
+
+
 function addEventGoToHome() {
     var buttonHome = document.getElementById("HOME");
     
@@ -129,7 +140,6 @@ export function addBodyHeader() {
                 divRow.classList.add("row","align-items-center","py-4");
                 divRow.id = "logo";
                 divHeaderBody.appendChild(divRow);
-
 
                     var divCol = document.createElement("div");
                     divCol.classList.add("col-lg-6","col-7");

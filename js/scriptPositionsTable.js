@@ -1,5 +1,5 @@
 
-import {addBodyHeader} from './scriptHome.js';
+import { addBodyHeader } from './scriptHome.js';
 
 function cleanTable() {
 
@@ -46,7 +46,6 @@ function addHeadTable(urlImageLeague) {
 
     var divConteinerFluid = document.createElement("div");
     divConteinerFluid.classList.add("container-fluid", "mt--6");
-    console.log(panel);
     panel.appendChild(divConteinerFluid);
 
     var divRawTablePositions= document.createElement("div");
@@ -95,7 +94,7 @@ function addHeadTable(urlImageLeague) {
                             
                         var thRank = document.createElement("th");
                         thRank.scope = "col";
-                        thRank.innerHTML = "Position";
+                        thRank.innerHTML = "#";
                         headTable.appendChild(thRank);
 
                         var thName = document.createElement("th");
@@ -108,6 +107,41 @@ function addHeadTable(urlImageLeague) {
                         thPoints.innerHTML = "Points"
                         headTable.appendChild(thPoints);
 
+                        var thPL = document.createElement("th");
+                        thPL.scope = "col";
+                        thPL.innerHTML = "PL"
+                        headTable.appendChild(thPL);
+
+                        var thW = document.createElement("th");
+                        thW.scope = "col";
+                        thW.innerHTML = "W"
+                        headTable.appendChild(thW);
+
+                        var thD = document.createElement("th");
+                        thD.scope = "col";
+                        thD.innerHTML = "D"
+                        headTable.appendChild(thD);
+
+                        var thL = document.createElement("th");
+                        thL.scope = "col";
+                        thL.innerHTML = "L"
+                        headTable.appendChild(thL);
+
+                        /* var thGF = document.createElement("th");
+                        thGF.scope = "col";
+                        thGF.innerHTML = "GF"
+                        headTable.appendChild(thGF);
+
+                        var thGA = document.createElement("th");
+                        thGA.scope = "col";
+                        thGA.innerHTML = "GA"
+                        headTable.appendChild(thGA); */
+
+                        var thGD = document.createElement("th");
+                        thGD.scope = "col";
+                        thGD.innerHTML = "GD"
+                        headTable.appendChild(thGD);
+
                     var bodyTable = document.createElement("tbody");
                     bodyTable.classList.add("list");
                     bodyTable.id = "bodyTable";
@@ -116,6 +150,8 @@ function addHeadTable(urlImageLeague) {
 }
 
 function insertTeamsIntoTable(team) {
+
+    console.log(team);
 
     var bodyTable = document.getElementById("bodyTable");
 
@@ -140,10 +176,48 @@ function insertTeamsIntoTable(team) {
                             </div>
                         </div>`;
 
-    var tdPuntos = document.createElement("td");
-    tdPuntos.classList.add("tbody-dark");
-    tr.appendChild(tdPuntos);
-    tdPuntos.innerHTML = team["points"];
+    var tdPoints = document.createElement("td");
+    tdPoints.classList.add("tbody-dark");
+    tdPoints.style.backgroundColor = "#46C282";
+    tr.appendChild(tdPoints);
+    tdPoints.innerHTML = team["points"];
+
+    var tdMatchesPlayed = document.createElement("td");
+    tdMatchesPlayed.classList.add("tbody-dark");
+    tr.appendChild(tdMatchesPlayed);
+    tdMatchesPlayed.innerHTML = team["all"]["played"];
+
+    var tdWin = document.createElement("td");
+    tdWin.classList.add("tbody-dark");
+    tr.appendChild(tdWin);
+    tdWin.innerHTML = team["all"]["win"];
+
+    var tdLose = document.createElement("td");
+    tdLose.classList.add("tbody-dark");
+    tr.appendChild(tdLose);
+    tdLose.innerHTML = team["all"]["lose"];
+
+    var tdDraw = document.createElement("td");
+    tdDraw.classList.add("tbody-dark");
+    tr.appendChild(tdDraw);
+    tdDraw.innerHTML = team["all"]["draw"];
+
+    /* var tdGoalsFor = document.createElement("td");
+    tdGoalsFor.classList.add("tbody-dark");
+    tr.appendChild(tdGoalsFor);
+    tdGoalsFor.innerHTML = team["all"]["goals"]["for"];
+
+    var tdGoalsAgainst = document.createElement("td");
+    tdGoalsAgainst.classList.add("tbody-dark");
+    tr.appendChild(tdGoalsAgainst);
+    tdGoalsAgainst.innerHTML = team["all"]["goals"]["against"]; */
+
+    var tdGoalDiff = document.createElement("td");
+    tdGoalDiff.classList.add("tbody-dark");
+    tr.appendChild(tdGoalDiff);
+    tdGoalDiff.innerHTML = team["goalsDiff"];
+
+
 
 }
 
