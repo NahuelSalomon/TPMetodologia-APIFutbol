@@ -134,7 +134,6 @@ export function addBodyHeader() {
             var divHeaderBody = document.createElement("div");
             divHeaderBody.classList.add("header-body");
             divConteiner.appendChild(divHeaderBody);
-
     
                 var divRow = document.createElement("div");
                 divRow.classList.add("row","align-items-center","py-4");
@@ -147,7 +146,7 @@ export function addBodyHeader() {
 
                         var h6PositionsTable =  document.createElement("div");
                         h6PositionsTable.classList.add("font-postions-table");
-                        h6PositionsTable.innerHTML = "Positions table";
+                        h6PositionsTable.innerHTML = "Statistics";
                         divCol.appendChild(h6PositionsTable);
 
 
