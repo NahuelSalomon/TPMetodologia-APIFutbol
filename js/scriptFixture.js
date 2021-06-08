@@ -18,11 +18,42 @@ function getEndpointLastRoundOfLeague(league, season) {
     return "fixtures/rounds?league=" + league + "&season=" + season;
 }
 
-
-export function updateFixtureLeague(endPointfixture, leagueMatches, league) {
-
+ export function chargeFixturesForLeague(leagueMatches, league, season) {    //leagueMatches es un array clave-valor de rounds-partidos del round
 
     if(leagueMatches.length === 0) {
+
+        callApi("fixtures?season="+season+"&league="+league)
+        .then(response => {
+
+            var index = 1;
+            var actualRound = response["response"][0]["league"]["round"];
+            leagueMatches[index] = new Array();
+            
+
+            response["response"].forEach( match => {
+
+                if (match["league"]["round"] != actualRound){     //Los partidos vienen todos juntos pero ordenados por rounds
+                    index++;
+                    actualRound = match["league"]["round"];
+                    leagueMatches[index] = new Array();
+                }
+                
+                leagueMatches[index].push(match);
+            });
+                    
+        })
+        .catch(error => { console.log(error); })
+    
+    }
+
+    console.log(leagueMatches);
+}
+
+//Esta función no tiene mucho sentido ahora
+ export function updateFixtureLeague(endPointfixture, leagueMatches, league, array) {
+
+
+     if(leagueMatches.length === 0) {
 
         callApi(getEndpointLastRoundOfLeague(league, "2020"))
         .then(response => {
@@ -35,8 +66,8 @@ export function updateFixtureLeague(endPointfixture, leagueMatches, league) {
                 .then(response => {
 
                     leagueMatches.push(response["response"]);
-                    insertAllMatchesIntoFixture(leagueMatches[0]);
-                    
+                    insertAllMatchesIntoFixture(array);
+                     
                 })
                 .catch(error => { console.log(error); })
         })
@@ -44,19 +75,107 @@ export function updateFixtureLeague(endPointfixture, leagueMatches, league) {
     
     }
     else {
-        insertAllMatchesIntoFixture(leagueMatches[0]);
+        insertAllMatchesIntoFixture(array);
     }
 
 }
 
-export function insertAllMatchesIntoFixture(matches) {
+/* export function roundsSelector(leagueMatches){
+
+    var divCol = document.getElementById("colFixture");
+
+    const keys = Object.keys(leagueMatches);    
+
+    console.log(divCol);
+    var div = document.createElement("div");
+    divCol.appendChild(div);
+
+        var divCard2 = document.createElement("div");
+        divCard2.classList.add("card", "card-stats");
+        div.appendChild(divCard2);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.classList.add("card", "body");
+        divCard2.appendChild(divCardBody);
+
+            var divRow= document.createElement("div");
+            divRow.classList.add("row");
+            divCardBody.appendChild(divRow);
+
+                var divSelect = document.createElement("div");
+                divSelect.classList.add("tab-pane", "tab-example-result", "fade show active");
+                divRow.appendChild(divSelect);
+
+                var select = document.createElement("select");
+                select.classList.add("form-control");
+                
+                for (const key of keys){
+                    var option = document.createElement("option");
+                    console.log(key);
+                    option.value = key;
+                    option.text = key;
+                    select.appendChild(option);
+                }
+
+                divRow.appendChild(select);            
+} */
+
+export function insertAllMatchesIntoFixture(leagueMatches) {
 
     var divRawTablePositions = document.getElementById("rawTablePositions");
 
     var divCol = document.createElement("div");
     divCol.classList.add("col");
-    divCol.id = "colPositions";
+    divCol.id = "colFixture";
     divRawTablePositions.appendChild(divCol);
+
+
+    // ------------------- Card to select round --------------------------------------
+console.log(leagueMatches);
+
+    const keys = Object.keys(leagueMatches);
+    var selectedRound = keys[keys.length - 1];  //Por default se muestra la fecha actual
+
+    console.log(selectedRound);
+    console.log(leagueMatches);
+    var div = document.createElement("div");
+    divCol.appendChild(div);
+
+        var divOne = document.createElement("div");
+        divOne.classList.add("tab-content");
+        div.appendChild(divOne);
+
+        var divTwo = document.createElement("div");
+        divTwo.classList.add("tab-pane", "tab-example-result", "fade", "show", "active");
+        divOne.appendChild(divTwo);
+
+            var divSelect = document.createElement("div");
+            divSelect.classList.add("tab-pane", "tab-example-result");
+            divTwo.appendChild(divSelect);
+
+            var select = document.createElement("select");
+            select.classList.add("form-control");
+            
+            for (const key of keys){
+                var option = document.createElement("option");
+                option.value = key;
+                option.text = leagueMatches[key][0]["league"]["round"];
+                select.appendChild(option);
+            }
+            divTwo.appendChild(select);
+
+            select.addEventListener('change', (e) => {
+                selectedRound = e.target.value;
+                console.log(selectedRound);
+                console.log(leagueMatches[selectedRound]);
+
+                    leagueMatches[selectedRound].forEach(match => {
+                    insertMatchIntoFixture(match);
+                });
+            });
+
+// ------------------- End card to select round --------------------------------------
+
 
     var divCard = document.createElement("div");
     divCard.classList.add("card","bg-default","shadow");
@@ -81,6 +200,7 @@ export function insertAllMatchesIntoFixture(matches) {
             headTable.style.backgroundColor = "#708C76";
             headTable.style.color = "white";
             tablePosition.appendChild(headTable);
+            
                     
                     var thDate = document.createElement("th");
                     thDate.scope = "col";
@@ -112,11 +232,6 @@ export function insertAllMatchesIntoFixture(matches) {
                     thStatistics.innerHTML = "#";
                     headTable.appendChild(thStatistics);
 
-    var i = 0;
-    matches.forEach(match => {
-        insertMatchIntoFixture(match,i);
-        i++;
-    });
 
 }
 
@@ -131,6 +246,8 @@ function cleanTableFixture() {
 }
 
 function insertMatchIntoFixture(match) {
+
+    console.log("ENTRO");
 
     var date = new Date(match["fixture"]["date"]).toDateString();
     var time = new Date(match["fixture"]["timestamp"] * 1000);
