@@ -244,7 +244,6 @@ function insertMatchIntoFixture(match,id) {
                                          </a>`;
                 tr.appendChild(tdStadistics);
                 
-                var id = 0;
                 var aStadistics = document.getElementById("match"+id);
                 aStadistics.setAttribute("data-bs-toggle","modal"); 
                 aStadistics.setAttribute("data-bs-target","#modal"+id);
