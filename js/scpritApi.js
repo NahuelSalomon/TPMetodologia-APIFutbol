@@ -1,4 +1,4 @@
-const apiKey = "66ab6bc907msh0221a2a6f3a869ep10c796jsn63c0bc0fe4a5";
+const apiKey = "60578cd98amsha3895ea4ceffa95p1eb205jsnf5b9038a2ada";
 
 export const endpointTeamsSpainStandings = "standings?season=2020&league=140";
 export const endpointTeamsEnglandStandings = "standings?season=2020&league=39";

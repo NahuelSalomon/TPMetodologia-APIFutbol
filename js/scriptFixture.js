@@ -1,5 +1,5 @@
 import { callApi } from './scpritApi.js';
-import {addAccionModalWindowStadistics } from './scriptStatistics.js'; 
+import {addModalForStadistics } from './scriptStatistics.js'; 
 
 export const endpointFixtureRounds = "fixtures/rounds?league=";
 export const endpointFixtureSpain = "fixtures?season=2020&league=140&round=";
@@ -130,7 +130,7 @@ function cleanTableFixture() {
     }
 }
 
-function insertMatchIntoFixture(match) {
+function insertMatchIntoFixture(match,id) {
 
     var date = new Date(match["fixture"]["date"]).toDateString();
     var time = new Date(match["fixture"]["timestamp"] * 1000);
@@ -198,7 +198,7 @@ function insertMatchIntoFixture(match) {
 
                 var tdStadistics = document.createElement("td");
                 tdStadistics.classList.add("tbody-dark");
-                tdStadistics.innerHTML = `<a class="nav-link" href=#>
+                tdStadistics.innerHTML = `<a class="nav-link" id="${"match"+id}" href=#>
                                             <span class="nav-link-text">
                                                 <i class="fas fa-search-plus" style="font-size:30px; color: black;"></i>
                                             </span>
@@ -206,8 +206,9 @@ function insertMatchIntoFixture(match) {
                 tr.appendChild(tdStadistics);
                 
                 var aStadistics = document.getElementById("match"+id);
-                addAccionModalWindowStadistics(aStadistics);
-                                
+                aStadistics.setAttribute("data-bs-toggle","modal"); 
+                aStadistics.setAttribute("data-bs-target","#modal"+id);
+                addModalForStadistics("modal"+id); 
 }
 
 
