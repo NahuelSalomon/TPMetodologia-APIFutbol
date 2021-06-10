@@ -5,8 +5,7 @@ import { callApi, endpointTeamsSpainStandings, endpointTeamsEnglandStandings,
                   endpointTeamsFranceStandings, endPointCountries } 
 from './scpritApi.js';
 
-import {updateFixtureLeague, endpointFixtureSpain,endpointFixtureEngland, endpointFixtureFrance,endpointFixtureItaly,endpointFixtureGermany,
-        spainMatches, englandMatches, franceMatches, italyMatches, germanyMatches } 
+import {spainMatches, englandMatches, franceMatches, italyMatches, germanyMatches, chargeFixturesForLeague, insertAllMatchesIntoFixture } 
 from './scriptFixture.js';
 
 
@@ -59,11 +58,12 @@ window.onload = () => {
     addEventToButtonLeague(buttonLeague1,endpointTeamsFranceStandings,franceFirstDivisionTeams,urlLogoLeague1);
     addEventToButtonLeague(buttonPremierLeague,endpointTeamsEnglandStandings,englandFirstDivisionTeams,urlLogoPremierLeague);
 
-    addEventFixtureToButtonLeague(buttonLaLiga,endpointFixtureSpain,spainMatches,"140");
-    addEventFixtureToButtonLeague(buttonPremierLeague,endpointFixtureEngland,englandMatches,"39");
-    addEventFixtureToButtonLeague(buttonBundesliga,endpointFixtureGermany,germanyMatches,"78");
-    addEventFixtureToButtonLeague(buttonSerieA,endpointFixtureItaly,italyMatches,"135");
-    addEventFixtureToButtonLeague(buttonLeague1,endpointFixtureFrance,franceMatches,"61");
+
+    addEventFixtureToButtonLeague(buttonLaLiga,spainMatches,"140");
+    addEventFixtureToButtonLeague(buttonPremierLeague,englandMatches,"39");
+    addEventFixtureToButtonLeague(buttonBundesliga,germanyMatches,"78");
+    addEventFixtureToButtonLeague(buttonSerieA,italyMatches,"135");
+    addEventFixtureToButtonLeague(buttonLeague1,franceMatches,"61");
    
 }
 
@@ -100,12 +100,15 @@ function addEventToButtonLeague(button,endponit,teams,urlLogo) {
 }
 
 
-function addEventFixtureToButtonLeague(button,endPointfixture, leagueMatches, league) {
+function addEventFixtureToButtonLeague(button, leagueMatches, league) {
 
     button.addEventListener("click", () => {
-
-        updateFixtureLeague(endPointfixture,leagueMatches,league);
-     
+        setTimeout(function(){
+            if(leagueMatches.length === 0){
+                chargeFixturesForLeague(leagueMatches, league, 2020);
+            }
+            insertAllMatchesIntoFixture(leagueMatches);
+        }, 1000);
     });
 }
 

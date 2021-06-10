@@ -1,12 +1,12 @@
 import { callApi } from './scpritApi.js';
 import {addModalForStadistics } from './scriptStatistics.js'; 
 
-export const endpointFixtureRounds = "fixtures/rounds?league=";
+/* export const endpointFixtureRounds = "fixtures/rounds?league=";
 export const endpointFixtureSpain = "fixtures?season=2020&league=140&round=";
 export const endpointFixtureEngland = "fixtures?league=39&season=2020&round=";
 export const endpointFixtureFrance = "fixtures?league=61&season=2020&round=";
 export const endpointFixtureItaly = "fixtures?league=135&season=2020&round=";
-export const endpointFixtureGermany = "fixtures?league=78&season=2020&round=";
+export const endpointFixtureGermany = "fixtures?league=78&season=2020&round="; */
 
 export const spainMatches = new Array();
 export const englandMatches = new Array();
@@ -14,120 +14,164 @@ export const franceMatches = new Array();
 export const italyMatches = new Array();
 export const germanyMatches = new Array();
 
-function getEndpointLastRoundOfLeague(league, season) {
-    return "fixtures/rounds?league=" + league + "&season=" + season;
-}
 
-
-export function updateFixtureLeague(endPointfixture, leagueMatches, league) {
-
+ export function chargeFixturesForLeague(leagueMatches, league, season) {    //leagueMatches es un array clave-valor de rounds-partidos del round
 
     if(leagueMatches.length === 0) {
 
-        callApi(getEndpointLastRoundOfLeague(league, "2020"))
+        callApi("fixtures?season="+season+"&league="+league)
         .then(response => {
 
-            var quantityRounds = response["results"];
+            var index = 1;
+            var actualRound = response["response"][0]["league"]["round"];
+            leagueMatches[index] = new Array();
+            
+            response["response"].forEach( match => {
 
-            var lastRoundLeague = response["response"][quantityRounds - 1];
-
-            callApi(endPointfixture+lastRoundLeague)
-                .then(response => {
-
-                    leagueMatches.push(response["response"]);
-                    insertAllMatchesIntoFixture(leagueMatches[0]);
+                if (match["league"]["round"] != actualRound){     //Los partidos vienen todos juntos pero ordenados por rounds
+                    index++;
+                    actualRound = match["league"]["round"];
+                    leagueMatches[index] = new Array();
+                }
+                
+                leagueMatches[index].push(match);
+            });
                     
-                })
-                .catch(error => { console.log(error); })
         })
         .catch(error => { console.log(error); })
-    
     }
-    else {
-        insertAllMatchesIntoFixture(leagueMatches[0]);
-    }
-
 }
 
-export function insertAllMatchesIntoFixture(matches) {
+
+export function insertAllMatchesIntoFixture(leagueMatches) {
 
     var divRawTablePositions = document.getElementById("rawTablePositions");
 
     var divCol = document.createElement("div");
     divCol.classList.add("col");
-    divCol.id = "colPositions";
+    divCol.id = "colFixture";
     divRawTablePositions.appendChild(divCol);
 
-    var divCard = document.createElement("div");
-    divCard.classList.add("card","bg-default","shadow");
+    // ------------------- Select round --------------------------------------
+
+    const keys = Object.keys(leagueMatches);
+    var selectedRound = keys[keys.length - 1];  //Por default se muestra la fecha actual
+
+    var div = document.createElement("div");
+    divCol.appendChild(div);
+
+        var divOne = document.createElement("div");
+        divOne.classList.add("tab-content");
+        div.appendChild(divOne);
+
+        var divTwo = document.createElement("div");
+        divTwo.classList.add("tab-pane", "tab-example-result", "fade", "show", "active");
+        divOne.appendChild(divTwo);
+
+            var divSelect = document.createElement("div");
+            divSelect.classList.add("tab-pane", "tab-example-result");
+            divTwo.appendChild(divSelect);
+
+            var select = document.createElement("select");
+            select.classList.add("form-control");
+            
+            for (const key of keys){
+                var option = document.createElement("option");
+                option.value = key;
+                option.text = leagueMatches[key][0]["league"]["round"];
+                if (key == selectedRound){
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            }
+            divTwo.appendChild(select);
+
+            
+            // ------------------- End select round --------------------------------------
+            
+            
+            var divCard = document.createElement("div");
+            divCard.classList.add("card","bg-default","shadow");
     divCard.style.backgroundColor = "#3D5443";
     divCol.appendChild(divCard);
-
+    
     var divTableResponsive = document.createElement("div");
     divTableResponsive.classList.add("table-responsive");
     divTableResponsive.id = "divTable";
     divCard.appendChild(divTableResponsive);
-
-            var tablePosition = document.createElement("table");
-            tablePosition.classList.add("table","align-items-center","table-success","table-flush");
-            tablePosition.id = "tablePositionFixture" ;
-            tablePosition.style.fontWeight = "bold";
-            tablePosition.style.color = "black";
-            divTableResponsive.appendChild(tablePosition);
-            
-            var headTable = document.createElement("thead");
-            headTable.classList.add("thead","head-table-positions" );
-            headTable.id = "headTable";
-            headTable.style.backgroundColor = "#708C76";
-            headTable.style.color = "white";
-            tablePosition.appendChild(headTable);
-                    
-                    var thDate = document.createElement("th");
-                    thDate.scope = "col";
+    
+    var tablePosition = document.createElement("table");
+    tablePosition.classList.add("table","align-items-center","table-success","table-flush");
+    tablePosition.id = "tablePositionFixture" ;
+    tablePosition.style.fontWeight = "bold";
+    tablePosition.style.color = "black";
+    divTableResponsive.appendChild(tablePosition);
+    
+    var headTable = document.createElement("thead");
+    headTable.classList.add("thead","head-table-positions" );
+    headTable.id = "headTable";
+    headTable.style.backgroundColor = "#708C76";
+    headTable.style.color = "white";
+    tablePosition.appendChild(headTable);
+    
+    
+    var thDate = document.createElement("th");
+    thDate.scope = "col";
                     thDate.innerHTML = "Date";
                     headTable.appendChild(thDate);
-
+                    
                     var thRank = document.createElement("th");
                     thRank.scope = "col";
                     thRank.innerHTML = "Home";
                     headTable.appendChild(thRank);
-
+                    
                     var thName = document.createElement("th");
                     thName.scope = "col";
                     thName.innerHTML = "Goals"
                     headTable.appendChild(thName);
-
+                    
                     var thPoints = document.createElement("th");
                     thPoints.scope = "col";
                     thPoints.innerHTML = "Goals"
                     headTable.appendChild(thPoints);
-
+                    
                     var thPoints = document.createElement("th");
                     thPoints.scope = "col";
                     thPoints.innerHTML = "Away"
                     headTable.appendChild(thPoints);
-
+                    
                     var thStatistics = document.createElement("th");
                     thStatistics.scope = "col";
                     thStatistics.innerHTML = "#";
                     headTable.appendChild(thStatistics);
 
-    var i = 0;
-    matches.forEach(match => {
-        insertMatchIntoFixture(match,i);
-        i++;
-    });
-
+                    var bodyTable = document.createElement("tbody");
+                    bodyTable.classList.add("list");
+                    bodyTable.id = "bodyTableFixture";
+                    tablePosition.appendChild(bodyTable);
+                    
+                    
+            leagueMatches[selectedRound].forEach(match => {
+                insertMatchIntoFixture(match);
+            });
+            
+            select.addEventListener('change', (e) => {
+                selectedRound = e.target.value;
+                cleanTableFixture();
+                leagueMatches[selectedRound].forEach(match => {
+                    insertMatchIntoFixture(match);
+                });
+            });
 }
 
-
-function cleanTableFixture() {
-
-    var bodyTable = document.getElementById("bodyTableFixture");
-
-    while (bodyTable.firstChild) {
-        bodyTable.removeChild(bodyTable.firstChild);
-    }
+                
+    function cleanTableFixture() {
+                    
+        var bodyTable = document.getElementById("bodyTableFixture");
+        
+        while (bodyTable.firstChild) {
+            bodyTable.removeChild(bodyTable.firstChild);
+        }
 }
 
 function insertMatchIntoFixture(match,id) {
@@ -144,12 +188,7 @@ function insertMatchIntoFixture(match,id) {
     var urlLogoAway = match["teams"]["away"]["logo"];
     var goalsAway = match["goals"]["away"];
 
-        var tablePosition = document.getElementById("tablePositionFixture");
-
-        var bodyTable = document.createElement("tbody");
-        bodyTable.classList.add("list");
-        bodyTable.id = "bodyTable";
-        tablePosition.appendChild(bodyTable);
+        var bodyTable = document.getElementById("bodyTableFixture");
 
             var tr = document.createElement("tr");
             tr.classList.add("tbody-dark");
@@ -205,6 +244,7 @@ function insertMatchIntoFixture(match,id) {
                                          </a>`;
                 tr.appendChild(tdStadistics);
                 
+                var id = 0;
                 var aStadistics = document.getElementById("match"+id);
                 aStadistics.setAttribute("data-bs-toggle","modal"); 
                 aStadistics.setAttribute("data-bs-target","#modal"+id);
