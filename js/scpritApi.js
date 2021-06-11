@@ -1,4 +1,4 @@
-const apiKey = "60578cd98amsha3895ea4ceffa95p1eb205jsnf5b9038a2ada";
+const apiKey = "a84e12600emsh55fa72be90df181p186ea1jsn2ebd3a322446";
 
 export const endpointTeamsSpainStandings = "standings?season=2020&league=140";
 export const endpointTeamsEnglandStandings = "standings?season=2020&league=39";
@@ -18,6 +18,9 @@ export const endPointCountries = 'countries';
 //c6d3962b98msh3d9ef288192541bp13fdb4jsn4ea5154eb7d4
 //a78f6a8f62msh63445a357fa766ep1bd777jsnd6a696a0d63e
 //13ee55ebdfmsh299e1efb590aae5p12e35fjsn2165e4f34d47
+//a39560cba2msh668287db1e5ca46p14541cjsnaadbbea3f2a5
+//783a19b21fmsh20fa32c5c29114dp16f65fjsn23ddf02fa070
+
 
 
 export function callApi(endPoint) {

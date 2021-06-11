@@ -8,6 +8,8 @@ from './scpritApi.js';
 import {spainMatches, englandMatches, franceMatches, italyMatches, germanyMatches, chargeFixturesForLeague, insertAllMatchesIntoFixture } 
 from './scriptFixture.js';
 
+import {scores, chargeTopScores, updateTable} 
+from './scriptTopScores.js';
 
 const spainFirstDivisionTeams = new Array();
 const englandFirstDivisionTeams = new Array();
@@ -33,6 +35,7 @@ window.onload = () => {
     const buttonLeague1 = document.getElementById("LEAGUE_1");
     const buttonPremierLeague = document.getElementById("PREMIER_LEAGUE");
  
+    
     callApi(endPointCountries)
         .then(response => {
 
@@ -52,6 +55,7 @@ window.onload = () => {
         .catch(error => console.log(error))
 
     addEventGoToHome();
+    
     addEventToButtonLeague(buttonLaLiga,endpointTeamsSpainStandings,spainFirstDivisionTeams,urlLogoSpain);
     addEventToButtonLeague(buttonSerieA,endpointTeamsItalyStandings,italyFirstDivisionTeams,urlLogoItaly);
     addEventToButtonLeague(buttonBundesliga,endpointTeamsGermanyStandings,germanyFirstDivisionTeams,urlLogoGermany);
@@ -64,6 +68,12 @@ window.onload = () => {
     addEventFixtureToButtonLeague(buttonBundesliga,germanyMatches,"78");
     addEventFixtureToButtonLeague(buttonSerieA,italyMatches,"135");
     addEventFixtureToButtonLeague(buttonLeague1,franceMatches,"61");
+
+    addEventTopScores(buttonLaLiga, scores, "140");
+    addEventTopScores(buttonLaLiga, scores, "39");
+    addEventTopScores(buttonLaLiga, scores, "78");
+    addEventTopScores(buttonLaLiga, scores, "135");
+    addEventTopScores(buttonLaLiga, scores, "61");
    
 }
 
@@ -100,6 +110,7 @@ function addEventToButtonLeague(button,endponit,teams,urlLogo) {
 }
 
 
+
 function addEventFixtureToButtonLeague(button, leagueMatches, league) {
 
     button.addEventListener("click", () => {
@@ -109,6 +120,22 @@ function addEventFixtureToButtonLeague(button, leagueMatches, league) {
             }
             insertAllMatchesIntoFixture(leagueMatches);
         }, 1000);
+    });
+    
+}
+
+
+function addEventTopScores(button, scores, league) {
+    button.addEventListener("click", () => {
+        setTimeout(function(){
+            if((scores.length === 0)) {
+                 chargeTopScores(scores, 2020, league); 
+            }
+            setTimeout(function(){ 
+                console.log("LLEUGEEEEEEEEEEE");
+                console.log(scores);
+                updateTable(scores, 2020, league)}, 3000);
+        }, 2000);
     });
 }
 
