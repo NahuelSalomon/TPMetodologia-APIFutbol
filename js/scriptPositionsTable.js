@@ -48,6 +48,7 @@ function addHeadTable(urlImageLeague) {
                     tablePosition.id = "table-position" ;
                     tablePosition.style.fontWeight = "bold";
                     tablePosition.style.color = "black";
+                    tablePosition.style.textAlign = "center";
                     divTableResponsive.appendChild(tablePosition);
                     
                     var headTable = document.createElement("thead");
@@ -131,7 +132,9 @@ function insertTeamsIntoTable(team) {
 
     var tdPoints = document.createElement("td");
     tdPoints.classList.add("tbody-dark");
-    tdPoints.style.backgroundColor = "#46C282";
+    tdPoints.style.backgroundColor = "#708C76";
+    tdPoints.style.color = "white";
+    tdPoints.style.fontWeight = "500";
     tr.appendChild(tdPoints);
     tdPoints.innerHTML = team["points"];
 
