@@ -29,7 +29,7 @@ export function addModalForStadistics(id,urlLogoHome, urlLogoAway) {
                                             <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
                                         </div>
                                     <div class="modal-body">
-                                            <table class="table table-sucess" style="text-align:center;">
+                                            <table class="table table-striped" style="text-align:center; color:black;">
                                                 <thead>
                                                     <tr>
                                                         <td>
@@ -64,11 +64,6 @@ export function addModalForStadistics(id,urlLogoHome, urlLogoAway) {
                             </div>`;
         document.body.appendChild(divModal);
 
-        /* var bodyTable = document.getElementById(`bodyTable${id}`);
-        console.log(bodyTable);
-        if(!bodyTable.firstChild) {
-            addDataToModal(id);
-        } */
 }
 
 export function addDataToModal(id) {

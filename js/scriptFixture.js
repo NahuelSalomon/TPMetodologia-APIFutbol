@@ -75,6 +75,8 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
 
             var select = document.createElement("select");
             select.classList.add("form-control");
+            select.style.backgroundColor= "#DFF7E4";
+            select.style.color = "black";
             
             for (const key of keys){
                 var option = document.createElement("option");
@@ -105,6 +107,7 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
     tablePosition.classList.add("table","align-items-center","table-success","table-flush");
     tablePosition.id = "tablePositionFixture" ;
     tablePosition.style.fontWeight = "bold";
+    tablePosition.style.textAlign = "center";
     tablePosition.style.color = "black";
     divTableResponsive.appendChild(tablePosition);
     
@@ -151,11 +154,12 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
                     bodyTable.id = "bodyTableFixture";
                     tablePosition.appendChild(bodyTable);
                     
-                    
+
+            
             leagueMatches[selectedRound].forEach(match => {
                 insertMatchIntoFixture(match);
             });
-            
+
             select.addEventListener('change', (e) => {
                 selectedRound = e.target.value;
                 cleanTableFixture();
@@ -163,6 +167,7 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
                     insertMatchIntoFixture(match);
                 });
             });
+
 }
 
                 

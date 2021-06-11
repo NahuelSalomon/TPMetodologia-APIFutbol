@@ -57,8 +57,7 @@ window.onload = () => {
     addEventToButtonLeague(buttonBundesliga,endpointTeamsGermanyStandings,germanyFirstDivisionTeams,urlLogoGermany);
     addEventToButtonLeague(buttonLeague1,endpointTeamsFranceStandings,franceFirstDivisionTeams,urlLogoLeague1);
     addEventToButtonLeague(buttonPremierLeague,endpointTeamsEnglandStandings,englandFirstDivisionTeams,urlLogoPremierLeague);
-
-
+    
     addEventFixtureToButtonLeague(buttonLaLiga,spainMatches,"140");
     addEventFixtureToButtonLeague(buttonPremierLeague,englandMatches,"39");
     addEventFixtureToButtonLeague(buttonBundesliga,germanyMatches,"78");
@@ -104,10 +103,14 @@ function addEventFixtureToButtonLeague(button, leagueMatches, league) {
 
     button.addEventListener("click", () => {
         setTimeout(function(){
+
             if(leagueMatches.length === 0){
                 chargeFixturesForLeague(leagueMatches, league, 2020);
             }
-            insertAllMatchesIntoFixture(leagueMatches);
+            setTimeout(function(){ 
+                insertAllMatchesIntoFixture(leagueMatches);
+            },2000);
+            
         }, 1000);
     });
 }
