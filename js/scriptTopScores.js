@@ -6,41 +6,17 @@ export function chargeTopScores(scores, season, league){
     callApi("players/topscorers?season="+season+"&league="+league)
     .then(response => {
         scores.push(response["response"]);
-        console.log(scores);
     })
     .catch(error => { console.log(error); });
 }
 
-export function createTable(scores) {
-    
-    //var divRawTablePositions = document.getElementById("rawTablePositions");
-/*
-    var divCol = document.createElement("div");
-    divCol.classList.add("col");
-    divCol.id = "colScore";
-    divRawTablePositions.appendChild(divCol);
-*/
-
+export function createTable(id) {
    
+var divRawTablePositions = document.getElementById("rawTablePositions");
 
-
-    var panel = document.getElementById("panel");
-    
- 
-
-    var divConteinerFluid = document.createElement("div");
-    divConteinerFluid.classList.add("container-fluid", "mt--6");
-    panel.appendChild(divConteinerFluid);
-   
-    var divRawTablePositions = document.createElement("div");
-    divRawTablePositions.classList.add("row");
-    divRawTablePositions.id = "rawTablePositions";
-    divConteinerFluid.appendChild(divRawTablePositions);
-           
-            var divCol = document.createElement("div");
-            divCol.classList.add("col");
-            divCol.id = "colPositions";
-            divRawTablePositions.appendChild(divCol);
+        var divCol = document.createElement("div");
+        divCol.classList.add("col");
+        divRawTablePositions.appendChild(divCol);
 
             var divCard = document.createElement("div");
             divCard.classList.add("card","bg-default","shadow");
@@ -65,11 +41,6 @@ export function createTable(scores) {
                     headTable.style.backgroundColor = "#708C76";
                     headTable.style.color = "white";
                     tablePosition.appendChild(headTable);        
-                                        
-                        var thPos = document.createElement("th");
-                        thPos.scope = "col";
-                        thPos.innerHTML = "#";
-                        headTable.appendChild(thPos);
 
                         var thPlayer = document.createElement("th");
                         thPlayer.scope = "col";
@@ -88,27 +59,20 @@ export function createTable(scores) {
 
                     var bodyTable = document.createElement("tbody");
                     bodyTable.classList.add("list");
-                    bodyTable.id = "bodyTable";
+                    bodyTable.id = "bodyTable"+id;
                     tablePosition.appendChild(bodyTable);
 
 }
 
 
-export function insertPlayerIntoTable(player) {
+export function insertPlayerIntoTable(player, id) {
 
-    console.log(player);
-    var bodyTable = document.getElementById("bodyTable");
+    var bodyTable = document.getElementById("bodyTable"+id);
 
     var tr = document.createElement("tr");
     tr.classList.add("tbody-dark");
     bodyTable.appendChild(tr);
 
-    /*
-    var tdRank = document.createElement("td");
-    tdRank.classList.add("tbody-dark");
-    tr.appendChild(tdRank);
-    tdRank.innerHTML = scores["rank"];
-*/
     var tdName = document.createElement("td");
     tdName.classList.add("tbody-dark");
     tr.appendChild(tdName);
@@ -125,7 +89,14 @@ export function insertPlayerIntoTable(player) {
     tdTeam.classList.add("tbody-dark");
     tdTeam.style.backgroundColor = "#46C282";
     tr.appendChild(tdTeam);
-    tdTeam.innerHTML = player["statistics"][0]["team"]["name"];
+    tdTeam.innerHTML = `<div class="media align-items-center">
+                            <a href="#" class="avatar img mr-3">
+                                <img alt="player logo" src=" ${player["statistics"][0]["team"]["logo"]}">
+                            </a>
+                            <div class="media-body">
+                                <span class="name mb-0 text-sm\">${player["statistics"][0]["team"]["name"]}</span>
+                            </div>
+                        </div>`;
 
     var tdGoals = document.createElement("td");
     tdGoals.classList.add("tbody-dark");
@@ -136,13 +107,12 @@ export function insertPlayerIntoTable(player) {
 }
 
 
-export function updateTable(scores) {
+export function updateTable(scores, sesion ,league) {
     
-    createTable(scores);
-    
+    createTable(league);
 
     scores[0].forEach(player => {
-        insertPlayerIntoTable(player);
+        insertPlayerIntoTable(player,league);
     });
 
 }

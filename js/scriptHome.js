@@ -17,6 +17,12 @@ const italyFirstDivisionTeams = new Array();
 const franceFirstDivisionTeams = new Array();
 const germanyFirstDivisionTeams = new Array();
 
+const scoresSpain = new Array();
+const scoresEngland = new Array();
+const scoresBundesliga = new Array();
+const scoresSerieA = new Array();
+const scoresLeague1 = new Array();
+
 const urlLogoSpain = new String();
 const urlLogoItaly = new String();
 const urlLogoGermany = new String();
@@ -68,12 +74,13 @@ window.onload = () => {
     addEventFixtureToButtonLeague(buttonSerieA,italyMatches,"135");
     addEventFixtureToButtonLeague(buttonLeague1,franceMatches,"61");
 
-    addEventTopScores(buttonLaLiga, scores, "140");
-    addEventTopScores(buttonLaLiga, scores, "39");
-    addEventTopScores(buttonLaLiga, scores, "78");
-    addEventTopScores(buttonLaLiga, scores, "135");
-    addEventTopScores(buttonLaLiga, scores, "61");
+    addEventTopScores(buttonLaLiga, scoresSpain, "140");
+    addEventTopScores(buttonPremierLeague, scoresEngland, "39");
+    addEventTopScores(buttonBundesliga, scoresBundesliga, "78");
+    addEventTopScores(buttonSerieA, scoresSerieA, "135");
+    addEventTopScores(buttonLeague1, scoresLeague1, "61");
    
+  
 }
 
 function insertFlagLeagueIntoNav(urlFlagLeague, parentId) {
@@ -134,9 +141,7 @@ function addEventTopScores(button, scores, league) {
             if((scores.length === 0)) {
                  chargeTopScores(scores, 2020, league); 
             }
-            setTimeout(function(){ 
-                console.log("LLEUGEEEEEEEEEEE");
-                console.log(scores);
+            setTimeout(function(){
                 updateTable(scores, 2020, league)}, 3000);
         }, 2000);
     });

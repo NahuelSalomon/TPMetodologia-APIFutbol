@@ -60,6 +60,7 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
 
     var div = document.createElement("div");
     divCol.appendChild(div);
+    divCol.id = "idExtras";
 
         var divOne = document.createElement("div");
         divOne.classList.add("tab-content");
