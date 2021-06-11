@@ -1,5 +1,5 @@
 import { callApi } from './scpritApi.js';
-import {addModalForStadistics } from './scriptStatistics.js'; 
+import {addModalForStadistics, addDataToModal} from './scriptStatistics.js'; 
 
 /* export const endpointFixtureRounds = "fixtures/rounds?league=";
 export const endpointFixtureSpain = "fixtures?season=2020&league=140&round=";
@@ -40,6 +40,7 @@ export const germanyMatches = new Array();
         })
         .catch(error => { console.log(error); })
     }
+    
 }
 
 
@@ -174,8 +175,8 @@ export function insertAllMatchesIntoFixture(leagueMatches) {
         }
 }
 
-function insertMatchIntoFixture(match,id) {
-
+function insertMatchIntoFixture(match) {
+    var id = match["fixture"]["id"];
     var date = new Date(match["fixture"]["date"]).toDateString();
     var time = new Date(match["fixture"]["timestamp"] * 1000);
     var formatedTime = time.getHours() + ":" + ("0" + time.getMinutes()).substr(-2);
@@ -198,7 +199,6 @@ function insertMatchIntoFixture(match,id) {
                 tdDate.classList.add("tbody-dark");
                 tr.appendChild(tdDate);
                 tdDate.innerHTML = date + "<br>" + formatedTime;
-
 
                 var tdHomeTeam = document.createElement("td");
                 tdHomeTeam.classList.add("tbody-dark");
@@ -244,10 +244,21 @@ function insertMatchIntoFixture(match,id) {
                                          </a>`;
                 tr.appendChild(tdStadistics);
                 
+
+                
                 var aStadistics = document.getElementById("match"+id);
                 aStadistics.setAttribute("data-bs-toggle","modal"); 
                 aStadistics.setAttribute("data-bs-target","#modal"+id);
-                addModalForStadistics("modal"+id); 
+                addModalForStadistics(id, urlLogoHome, urlLogoAway);
+
+                aStadistics.addEventListener("click", () => {
+                    var bodyTable = document.getElementById(`bodyTable${id}`);
+                    if(!bodyTable.firstChild) {
+                        addDataToModal(id);
+                    }
+                });
+            
+                
 }
 
 
