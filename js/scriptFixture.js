@@ -210,21 +210,27 @@ function insertMatchIntoFixture(match) {
                 tdHomeTeam.classList.add("tbody-dark");
                 tr.appendChild(tdHomeTeam);
                 tdHomeTeam.innerHTML = `<div class="media align-items-center">
-                                        <a href="#" class="avatar img mr-1">
-                                            <img alt="Team logo" src=" ${urlLogoHome}">
-                                        </a>
                                         <div class="media-body">
                                             <span class="name mb-0 text-sm\">${nameHome}</span>
                                         </div>
+                                        <a href="#" class="avatar img mr-1">
+                                            <img alt="Team logo" src=" ${urlLogoHome}">
+                                        </a>
                                     </div>`;
 
                 var tdHomePoints = document.createElement("td");
                 tdHomePoints.classList.add("tbody-dark");
+                tdHomePoints.style.backgroundColor = "#708C76";
+                tdHomePoints.style.color = "white";
+                tdHomePoints.style.fontWeight = "500";
                 tr.appendChild(tdHomePoints);
                 tdHomePoints.innerHTML = goalsHome == null ? "-" : goalsHome;
 
                 var tdAwayPoints = document.createElement("td");
                 tdAwayPoints.classList.add("tbody-dark");
+                tdAwayPoints.style.backgroundColor = "#708C76";
+                tdAwayPoints.style.color = "white";
+                tdAwayPoints.style.fontWeight = "500";
                 tr.appendChild(tdAwayPoints);
                 tdAwayPoints.innerHTML = goalsAway == null ? "-" : goalsHome;
 

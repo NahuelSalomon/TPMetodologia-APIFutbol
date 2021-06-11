@@ -14,9 +14,12 @@ export function createTable(id) {
    
 var divRawTablePositions = document.getElementById("rawTablePositions");
 
-        var divCol = document.createElement("div");
+        /* var divCol = document.createElement("div");
         divCol.classList.add("col");
-        divRawTablePositions.appendChild(divCol);
+        divRawTablePositions.appendChild(divCol); */
+
+            var divCol = document.getElementById("idExtras");
+            divRawTablePositions.appendChild(divCol);
 
             var divCard = document.createElement("div");
             divCard.classList.add("card","bg-default","shadow");
@@ -33,6 +36,8 @@ var divRawTablePositions = document.getElementById("rawTablePositions");
                     tablePosition.id = "table-position" ;
                     tablePosition.style.fontWeight = "bold";
                     tablePosition.style.color = "black";
+                    tablePosition.style.alignText = "center";
+                    tablePosition.style.alignContent = "center";
                     divTableResponsive.appendChild(tablePosition);
                     
                     var headTable = document.createElement("thead");
@@ -87,7 +92,10 @@ export function insertPlayerIntoTable(player, id) {
 
     var tdTeam = document.createElement("td");
     tdTeam.classList.add("tbody-dark");
-    tdTeam.style.backgroundColor = "#46C282";
+    tdTeam.style.color = "white";
+    tdTeam.style.backgroundColor = "#708C76";
+    tdTeam.style.fontWeight = "500";
+    //tdTeam.style.backgroundColor = "#46C282";
     tr.appendChild(tdTeam);
     tdTeam.innerHTML = `<div class="media align-items-center">
                             <a href="#" class="avatar img mr-3">
@@ -100,7 +108,10 @@ export function insertPlayerIntoTable(player, id) {
 
     var tdGoals = document.createElement("td");
     tdGoals.classList.add("tbody-dark");
-    tdGoals.style.backgroundColor = "#46C282";
+    //tdGoals.style.backgroundColor = "#46C282";
+    tdGoals.style.color = "white";
+    tdGoals.style.backgroundColor = "#708C76";
+    tdGoals.style.fontWeight = "500";
     tr.appendChild(tdGoals);
     tdGoals.innerHTML = player["statistics"][0]["goals"]["total"];
 

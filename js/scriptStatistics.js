@@ -30,7 +30,7 @@ export function addModalForStadistics(id,urlLogoHome, urlLogoAway) {
                                         </div>
                                     <div class="modal-body">
                                             <table class="table table-striped" style="text-align:center; color:black;">
-                                                <thead>
+                                                <thead style="font-weight: 'bold';">
                                                     <tr>
                                                         <td>
                                                             <div>
@@ -56,7 +56,7 @@ export function addModalForStadistics(id,urlLogoHome, urlLogoAway) {
                                                         <td>AWAY</td>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="bodyTable${id}"></tbody>
+                                                <tbody class="table table-success" id="bodyTable${id}"></tbody>
                                             </table>    
                                         </div>
                                     </div>
@@ -84,18 +84,21 @@ export function addDataToModal(id) {
 
             var tdValueHome = document.createElement("td");
             tdValueHome.style.fontWeight = "bold";
+            tdValueHome.style.color = "black";
             if(stadisticsTeam1[i]['value']) {
                 tdValueHome.innerHTML = stadisticsTeam1[i]['value'];
             } else { tdValueHome.innerHTML = 0; }
         
 
             var tdTypeStadistic = document.createElement("td");
-            tdTypeStadistic.style.color = "black";
+            tdTypeStadistic.style.color = "white";
+            tdTypeStadistic.style.backgroundColor = "#708C76";
             tdTypeStadistic.innerHTML = stadisticsTeam1[i]['type'];
 
 
             var tdValueAway = document.createElement("td");
             tdValueAway.style.fontWeight = "bold";
+            tdValueAway.style.color = "black";
             if(stadisticsTeam2[i]['value']) {
                 tdValueAway.innerHTML = stadisticsTeam2[i]['value'];
             } else { tdValueAway.innerHTML = 0; }
